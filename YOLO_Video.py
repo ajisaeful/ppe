@@ -10,8 +10,8 @@ def video_detection(path_x):
     frame_height=int(cap.get(4))
     #out=cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M', 'J', 'P','G'), 10, (frame_width, frame_height))
 
-    model=YOLO("YOLO-Weights/ppe.pt")
-    classNames = ['Protective Helmet', 'Shield', 'Jacket', 'Dust Mask', 'Eye Wear', 'Glove', 'Protective Boots']
+    model=YOLO("YOLO-Weights/best.pt")
+    classNames = ['glases', 'gloves', 'helmet', 'mask', 'safety-shoes', 'vest']
     while True:
         success, img = cap.read()
         results=model(img,stream=True)
@@ -28,12 +28,18 @@ def video_detection(path_x):
                 t_size = cv2.getTextSize(label, 0, fontScale=1, thickness=2)[0]
                 print(t_size)
                 c2 = x1 + t_size[0], y1 - t_size[1] - 3
-                if class_name == 'Dust Mask':
+                if class_name == 'glases':
                     color=(0, 204, 255)
-                elif class_name == "Glove":
+                elif class_name == "gloves":
                     color = (222, 82, 175)
-                elif class_name == "Protective Helmet":
+                elif class_name == "helmet":
                     color = (0, 149, 255)
+                elif class_name == "mask":
+                    color = (255, 255, 0)
+                elif class_name == "safety-shoes":
+                    color = (255, 0, 0)
+                elif class_name == "vest":
+                    color = (255, 165, 0)
                 else:
                     color = (85,45,255)
                 if conf>0.5:
